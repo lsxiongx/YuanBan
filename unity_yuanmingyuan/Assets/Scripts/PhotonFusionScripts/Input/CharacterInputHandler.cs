@@ -3,6 +3,7 @@
 // 编写作者：雄
 // 编写日期：
 
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class CharacterInputHandler : MonoBehaviour
@@ -10,9 +11,13 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 moveInputVector = Vector2.zero;
 
     private Transform LocalCamera;
+    public VirtualJoystick virtualJoystick;
 
+    [DllImport("__Internal")]
+    private static extern bool HelloPlatform();
     private void Awake()
     {
+        virtualJoystick = GameObject.FindGameObjectWithTag("UI").transform.GetChild(0).GetComponent<VirtualJoystick>();
         LocalCamera = Camera.main.transform;
     }
 
@@ -23,10 +28,27 @@ public class CharacterInputHandler : MonoBehaviour
     }
     void LateUpdate()
     {
-        //Move
-        setInputMove(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
-        moveInputVector.x = Input.GetAxis("Horizontal");
-        moveInputVector.y = Input.GetAxis("Vertical");
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (!HelloPlatform())
+            {
+                //Mobile Move
+                setInputMove(virtualJoystick.GetDir().x, virtualJoystick.GetDir().y);
+            }
+            else
+            {
+                //PcMove
+                setInputMove(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+            }
+        }
+        else
+        {
+            //PcMove
+            setInputMove(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+        }
+        
+        // moveInputVector.x = Input.GetAxis("Horizontal");
+        // moveInputVector.y = Input.GetAxis("Vertical");
     }
 
     public NetWorkInputData GetNetworkInput()
