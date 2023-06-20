@@ -6,20 +6,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
+using UnityEngine.UI;
 
 public class WebPlayerController : MonoBehaviour
 {
     private PlayerController playerController;
     public CharacterSelect characterSelect;
-    
+
+    public NetworkRunnerHandler networkRunnerHandler;
+
+    // public Button Test_Btn;
     private void Start()
     {
-        //测试用，发布需注释
-        string a =
-            "{\"playerID\":\"id value\",\"type\":\"cloud/local\",\"multiplayer\":\"yes/no\",\"modelURL\":\"string\",\"message\":{\"model\":\"0\",\"type\":\"female\"}}";
-        Debug.Log(a);
-        init(a);
-        
+        if (Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            //测试用，发布需注释
+            string a =
+                "{\"playerID\":\"id value\",\"type\":\"cloud/local\",\"multiplayer\":\"yes/no\",\"modelURL\":\"string\",\"message\":{\"model\":\"0\",\"type\":\"female\"}}";
+            Debug.Log(a);
+            init(a);
+        }
+        // Test_Btn.onClick.AddListener(() =>
+        // {
+        //     animation("{\"playerID\":\"id value\",\"animation\":\"wave\",\"type\":\"yes/no\"}");
+        // });
     }
     /// <summary>
     /// 初始化角色参数
@@ -28,7 +38,8 @@ public class WebPlayerController : MonoBehaviour
     private void init(string messageData)
     {
         PlayerPrefs.SetString("playerData",messageData);
-        initDataClass data = JsonMapper.ToObject<initDataClass>(messageData);
+        networkRunnerHandler.StartGames();
+        //initDataClass data = JsonMapper.ToObject<initDataClass>(messageData);
         // characterSelect.GetCharactersGender(data.message.type);
         // characterSelect.InstantitationCharacters(data.message.model,"GenderData.username");
         // playerController = characterSelect.getPlayer();
@@ -44,7 +55,7 @@ public class WebPlayerController : MonoBehaviour
         animationDataClass data = JsonMapper.ToObject<animationDataClass>(messageData);
         if (NetworkPlayer.local != null)
         {
-            NetworkPlayer.local.GetComponent<CharacterMovementHandler>().SwitchAnimator(data.animation);
+            NetworkPlayer.local.GetComponent<CharacterMovementHandler>().setAnimStr(data.animation);
         }
         Debug.Log("联通方法：animation");
     }

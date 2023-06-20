@@ -1756,6 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSelect: {fileID: 802909881}
+  networkRunnerHandler: {fileID: 1614642654}
 --- !u!1 &1306671097
 GameObject:
   m_ObjectHideFlags: 0

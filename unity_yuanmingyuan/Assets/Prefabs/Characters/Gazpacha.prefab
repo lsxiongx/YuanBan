@@ -496,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972803933a6bdeb46a2ce4ae056af3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualJoystick: {fileID: 0}
 --- !u!114 &8116569565942787430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +526,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   Animator: {fileID: 152992483805634228}
   TotalWords: 2
-  SyncSettings: 79
+  SyncSettings: -49
   FloatAccuracy:
     _value: 0
     _inverse: 0

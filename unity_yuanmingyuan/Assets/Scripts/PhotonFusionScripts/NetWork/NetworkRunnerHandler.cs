@@ -20,17 +20,13 @@ public class NetworkRunnerHandler : MonoBehaviour
     [SerializeField]
     private GameMode moshi;
 
-    private void Start()
-    {
-        StartGames();
-    }
+    // private void Start()
+    // {
+    //     StartGames();
+    // }
 
     public void StartGames()
     {
-        if (!(moshi == GameMode.Host))
-        {
-            
-        }
         networkRunner = Instantiate(NetworkRunnerPrefab);
         networkRunner.name = "Network Runner";
         var ClientTask =  StartNetworkRunner(networkRunner,moshi , NetAddress.Any(), SceneManager.GetActiveScene().buildIndex,null);

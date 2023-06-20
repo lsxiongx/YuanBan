@@ -27,6 +27,8 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     private Animator PlayerAnim;
 
+    private string AnimStr = "null";
+
     private float moveSpeed = 0;
     // Start is called before the first frame update
     private void Awake()
@@ -49,31 +51,34 @@ public class CharacterMovementHandler : NetworkBehaviour
                 Vector3 MoveDir = Quaternion.Euler(0f, targetangle, 0f) * Vector3.forward;
                 networkCharacterControllerPrototypeCustom.Move(MoveDir);
             }
+            if (AnimStr != "null")
+            {
+                SwitchAnimator(AnimStr);
+            }
             speedAnimation();
         }
     }
-    
+
+    // public override void Render()
+    // {
+    //     if (AnimStr != "null")
+    //     {
+    //         SwitchAnimator(AnimStr);
+    //     }
+    // }
+    public void setAnimStr(string str)
+    {
+        AnimStr = str;
+    }
     private void speedAnimation()
     {
         //animator.SetFloat("Speed", PlayerRigidbody.velocity.sqrMagnitude);
         PlayerAnim.SetFloat("Speed",moveSpeed);
     }
+    
     public void SwitchAnimator(string animatorId)
     {
-        switch (animatorId)
-        {
-            case "dance":
-                PlayerAnim.SetTrigger("dance");
-                break;
-            case "seat":
-                PlayerAnim.SetTrigger("seat");
-                break;
-            case "jump":
-                PlayerAnim.SetTrigger("jump");
-                break;
-            case "wave":
-                PlayerAnim.SetTrigger("wave");
-                break;
-        }
+        PlayerAnim.SetTrigger(animatorId);
+        AnimStr = "null";
     }
 }
