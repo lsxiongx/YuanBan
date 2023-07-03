@@ -15,10 +15,10 @@ public class WebPlayerController : MonoBehaviour
 
     public NetworkRunnerHandler networkRunnerHandler;
 
-    // public Button Test_Btn;
+    public Button Test_btn;
     private void Start()
     {
-        if (Application.platform == RuntimePlatform.WindowsPlayer)
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
             //测试用，发布需注释
             string a =
@@ -26,10 +26,10 @@ public class WebPlayerController : MonoBehaviour
             Debug.Log(a);
             init(a);
         }
-        // Test_Btn.onClick.AddListener(() =>
-        // {
-        //     animation("{\"playerID\":\"id value\",\"animation\":\"wave\",\"type\":\"yes/no\"}");
-        // });
+        Test_btn.onClick.AddListener(() =>
+        {
+            animation("{\"playerID\":\"id value\",\"animation\":\"wave\",\"type\":\"yes/no\"}");
+        });
     }
     /// <summary>
     /// 初始化角色参数

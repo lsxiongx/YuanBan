@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using Fusion;
+using Fusion.Editor;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
@@ -25,7 +26,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     /// </summary>
     private float turnSmoothVelocity;
 
-    private Animator PlayerAnim;
+    private NetworkMecanimAnimator PlayerAnim;
 
     private string AnimStr = "null";
 
@@ -34,7 +35,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     private void Awake()
     {
         networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
-        PlayerAnim = GetComponentInChildren<Animator>();
+        PlayerAnim = GetComponentInChildren<NetworkMecanimAnimator>();
     }
 
     public override void FixedUpdateNetwork()
@@ -51,12 +52,13 @@ public class CharacterMovementHandler : NetworkBehaviour
                 Vector3 MoveDir = Quaternion.Euler(0f, targetangle, 0f) * Vector3.forward;
                 networkCharacterControllerPrototypeCustom.Move(MoveDir);
             }
-            if (AnimStr != "null")
-            {
-                SwitchAnimator(AnimStr);
-            }
-            speedAnimation();
         }
+        if (AnimStr != "null")
+        {
+            Debug.Log("Button___" + AnimStr);
+            SwitchAnimator(AnimStr);
+        }
+        speedAnimation();
     }
 
     // public override void Render()
@@ -73,12 +75,12 @@ public class CharacterMovementHandler : NetworkBehaviour
     private void speedAnimation()
     {
         //animator.SetFloat("Speed", PlayerRigidbody.velocity.sqrMagnitude);
-        PlayerAnim.SetFloat("Speed",moveSpeed);
+        PlayerAnim.Animator.SetFloat("Speed",moveSpeed);
     }
     
     public void SwitchAnimator(string animatorId)
     {
-        PlayerAnim.SetTrigger(animatorId);
+        PlayerAnim.SetTrigger(animatorId,true);
         AnimStr = "null";
     }
 }

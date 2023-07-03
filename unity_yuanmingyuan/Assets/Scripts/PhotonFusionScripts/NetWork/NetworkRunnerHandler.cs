@@ -17,7 +17,6 @@ public class NetworkRunnerHandler : MonoBehaviour
 {
     public NetworkRunner NetworkRunnerPrefab;
     private NetworkRunner networkRunner;
-    [SerializeField]
     private GameMode moshi;
 
     // private void Start()
@@ -29,6 +28,13 @@ public class NetworkRunnerHandler : MonoBehaviour
     {
         networkRunner = Instantiate(NetworkRunnerPrefab);
         networkRunner.name = "Network Runner";
+        
+        moshi = GameMode.Server;
+#if UNITY_EDITOR
+        moshi = GameMode.AutoHostOrClient;
+#elif UNITY_WEBGL
+        moshi = GameMode.Client;
+#endif
         var ClientTask =  StartNetworkRunner(networkRunner,moshi , NetAddress.Any(), SceneManager.GetActiveScene().buildIndex,null);
         Debug.Log("Start Games");
     }
