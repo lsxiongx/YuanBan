@@ -86,10 +86,21 @@ public class MobileCamera : MonoBehaviour
     /// </summary>
     private void DragToRotateView()
     {
-        if (Input.GetMouseButton(0) && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        xAngle = 0;
+        yAngle = 0;
+        
+        if (Input.GetMouseButton(0) && !VirtualJoystick.inDrag)
         {
             xAngle = Input.GetAxis("Mouse X");
             yAngle = Input.GetAxis("Mouse Y");
+        }
+
+        if (Input.touchCount == 2)
+        {
+            if (Input.GetTouch(1).phase==TouchPhase.Moved)
+            {
+                
+            }
         }
         
         if (/*UIDetection.Instance.UIDetect() ||*/ (Input.touchCount <= 1 && VirtualJoystick.inDrag))

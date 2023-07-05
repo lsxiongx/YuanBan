@@ -84,12 +84,15 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void DragToRotateView()
     {
-        if (UIDetection.Instance.UIDetect())  // UI检测
+        xAngle = 0;
+        yAngle = 0;
+        if (Input.GetMouseButtonDown(0) && VirtualJoystick.inDrag)  // UI检测
         {
+            Debug.Log("点击到UI");
             return;
         }
 
-        if (Input.GetMouseButton(1) || Input.GetMouseButton(0))
+        if ((Input.GetMouseButton(1) || Input.GetMouseButton(0)) && !VirtualJoystick.inDrag)
         {
             xAngle = Input.GetAxis("Mouse X");
             yAngle = Input.GetAxis("Mouse Y");
