@@ -36,25 +36,25 @@ public class MobileCamera : MonoBehaviour
     /// </summary>
     public VirtualJoystick virtualJoystick;
     
-    private void Start()
-    {
-        freeLookCam = GetComponent<CinemachineFreeLook>();
-        freeLookCam.enabled = true;
-    }
-
-    private void Update()
-    {
-        if (getAim)
-        {
-            if (GameObject.FindGameObjectWithTag("Player") != null)
-            {
-                player = GameObject.FindGameObjectWithTag("Player").transform;
-                freeLookCam.Follow = player;
-                freeLookCam.LookAt = player.GetChild(0); 
-                getAim = false;
-            }
-        }
-    }
+    // private void Start()
+    // {
+    //     freeLookCam = GetComponent<CinemachineFreeLook>();
+    //     freeLookCam.enabled = true;
+    // }
+    //
+    // private void Update()
+    // {
+    //     if (getAim)
+    //     {
+    //         if (GameObject.FindGameObjectWithTag("Player") != null)
+    //         {
+    //             player = GameObject.FindGameObjectWithTag("Player").transform;
+    //             freeLookCam.Follow = player;
+    //             freeLookCam.LookAt = player.GetChild(0); 
+    //             getAim = false;
+    //         }
+    //     }
+    // }
 
     private void LateUpdate()
     {
@@ -95,13 +95,19 @@ public class MobileCamera : MonoBehaviour
             yAngle = Input.GetAxis("Mouse Y");
         }
 
-        if (Input.touchCount == 2)
-        {
-            if (Input.GetTouch(1).phase==TouchPhase.Moved)
-            {
-                
-            }
-        }
+        // if (2 == Input.touchCount)
+        // {
+        //     if (Input.GetTouch(1).phase==TouchPhase.Moved)
+        //     {
+        //         Touch[] arrayData = Input.touches;
+        //         Vector2 startPos = arrayData[1].position;
+        //         Vector2 endPos = Input.GetTouch(1).position;
+        //         Vector2 data = endPos - startPos;
+        //         data = data.normalized;
+        //         xAngle = data.x;
+        //         yAngle = data.y;
+        //     }
+        // }
         
         if (/*UIDetection.Instance.UIDetect() ||*/ (Input.touchCount <= 1 && VirtualJoystick.inDrag))
         {
@@ -118,6 +124,7 @@ public class MobileCamera : MonoBehaviour
         freeLookCam.m_XAxis.m_InputAxisValue = -xAngle * xRotaSensitive;
         freeLookCam.m_YAxis.m_InputAxisValue = -yAngle;
     }
+
 
     [Header("滚轮灵敏度")]
     public float scrollSensitive;
