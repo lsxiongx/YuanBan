@@ -7,10 +7,15 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using Fusion;
+using TMPro;
 
 public class NetworkPlayer : NetworkBehaviour,IPlayerLeft
-{
+{    
+    
+    public TextMeshPro PlayerName1;
+    public TextMeshPro PlayerName2;
     public static NetworkPlayer local { get; set; }
+    public SendMessages _SendMessages;
 
     [Networked(OnChanged = nameof(OnNickNameChanged))] public NetworkString<_16> nickName { set; get; }
 
@@ -43,15 +48,13 @@ public class NetworkPlayer : NetworkBehaviour,IPlayerLeft
 
     static void OnNickNameChanged(Changed<NetworkPlayer> changed)
     {
-        Debug.Log($"{Time.time} OnHPChanged value {changed.Behaviour.nickName}");
-
         changed.Behaviour.OnNickNameChanged();
     }
 
     private void OnNickNameChanged()
     {
-        Debug.Log($"Nickname changed for player to {nickName} for player {gameObject.name}");
-
+        PlayerName1.text = nickName.ToString();
+        PlayerName2.text = nickName.ToString();
     }
     
     [Rpc(RpcSources.InputAuthority,RpcTargets.StateAuthority)]

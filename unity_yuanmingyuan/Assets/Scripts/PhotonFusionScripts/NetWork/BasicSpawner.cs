@@ -43,6 +43,7 @@ public class BasicSpawner : MonoBehaviour,INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             initDataClass GenderData = JsonMapper.ToObject<initDataClass>(PlayerPrefs.GetString("playerData"));
+            PlayerPrefs.SetString("playerNickName", GenderData.playerID);
             if (string.Equals(GenderData.message.type, "female")) 
             {
                 runner.Spawn(_characterSelect.femalecharacters[int.Parse(GenderData.message.model)], _characterSelect.originPos, Quaternion.identity, player);

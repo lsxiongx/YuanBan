@@ -2,6 +2,8 @@
 // 功能描述：
 // 编写作者：雄
 // 编写日期：
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,20 +17,22 @@ public class WebPlayerController : MonoBehaviour
 
     public NetworkRunnerHandler networkRunnerHandler;
 
-    // public Button Test_btn;
+    /*public Button Test_btn;
+    public string message;*/
     private void Start()
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
             //测试用，发布需注释
             string a =
-                "{\"playerID\":\"id value\",\"type\":\"cloud/local\",\"multiplayer\":\"yes/no\",\"modelURL\":\"string\",\"message\":{\"model\":\"0\",\"type\":\"female\"}}";
+                "{\"playerID\":\"Noob Bot 一号\",\"type\":\"cloud/local\",\"multiplayer\":\"yes/no\",\"modelURL\":\"string\",\"message\":{\"model\":\"0\",\"type\":\"female\"}}";
             Debug.Log(a);
             init(a);
         }
         /*Test_btn.onClick.AddListener(() =>
         {
-            animation("{\"playerID\":\"id value\",\"animation\":\"wave\",\"type\":\"yes/no\"}");
+            //animation("{\"playerID\":\"id value\",\"animation\":\"wave\",\"type\":\"yes/no\"}");
+            NetworkPlayer.local._SendMessages.ReceiveMessage(message);
         });*/
     }
     /// <summary>
@@ -67,6 +71,10 @@ public class WebPlayerController : MonoBehaviour
     private void speak(string messageData)
     {
         speakDataClass data = JsonMapper.ToObject<speakDataClass>(messageData);
+        if (data.message != null && data.message != String.Empty)
+        {
+            NetworkPlayer.local._SendMessages.ReceiveMessage(data.message);
+        }
         Debug.Log("联通方法：speak");
 
     }
